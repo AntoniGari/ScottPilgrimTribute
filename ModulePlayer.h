@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "ModuleParticles.h"
 #include "Point.h"
+#include "SDL/include/SDL_render.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -23,7 +24,6 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:
-
 	SDL_Texture* graphics = nullptr;
 	Collider* collider = nullptr;
 	Animation* current_animation = nullptr;
@@ -37,7 +37,11 @@ public:
 	Particle explosion;
 	Particle laser;
 	bool finished = false;
+	SDL_RendererFlip flip;
 	iPoint position;
+
+public:
+		
 };
 
 #endif // __MODULEPLAYER_H__

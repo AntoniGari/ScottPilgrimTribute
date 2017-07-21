@@ -66,6 +66,7 @@ ModulePlayer::~ModulePlayer() {}
 bool ModulePlayer::Start() {
 	LOG("Loading player");
 
+	flip = SDL_FLIP_NONE;
 	graphics = App->textures->Load("characters\\scott_p1.png");
 
 	position.x = 150;
@@ -77,7 +78,7 @@ bool ModulePlayer::Start() {
 	explosion.fx = App->audio->LoadFx("explosion.wav");
 	laser.fx = App->audio->LoadFx("slimeball.wav");
 
-	collider = App->collision->AddCollider({0, 0, 32, 14}, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({0, 0, 40, 70}, COLLIDER_PLAYER, this);
 
 	finished = false;
 	return true;
@@ -100,6 +101,7 @@ update_status ModulePlayer::Update() {
 		return UPDATE_CONTINUE;
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		flip = SDL_FLIP_HORIZONTAL;
 		position.x -= speed;
 		if (current_animation != &walk) {
 			walk.Reset();
@@ -108,6 +110,7 @@ update_status ModulePlayer::Update() {
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		flip = SDL_FLIP_NONE;
 		position.x += speed;
 		if (current_animation != &walk) {
 			walk.Reset();
@@ -132,7 +135,7 @@ update_status ModulePlayer::Update() {
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
-		App->particles->AddParticle(laser, position.x + 28, position.y, COLLIDER_PLAYER_SHOT);
+		//App->particles->AddParticle(laser, position.x + 28, position.y, COLLIDER_PLAYER_SHOT);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
@@ -140,7 +143,7 @@ update_status ModulePlayer::Update() {
 
 	collider->SetPos(position.x, position.y);
 
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), flip);
 
 	return UPDATE_CONTINUE;
 }

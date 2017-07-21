@@ -7,6 +7,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneLevel1.h"
 #include "ModuleSceneIntro.h"
+#include "SDL/include/SDL_render.h"
 
 // Reference at https://youtu.be/6OlenbCC4WI?t=382
 
@@ -19,8 +20,8 @@ bool ModuleSceneIntro::Start() {
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	graphics = App->textures->Load("intro.png");
-	App->audio->PlayMusic("intro.ogg", 0.0f);
+	graphics = App->textures->Load("ui\\start.png");
+	App->audio->PlayMusic("music\\01-scott-pilgrim-anthem.ogg", 0.0f);
 	fx = App->audio->LoadFx("starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -39,7 +40,7 @@ bool ModuleSceneIntro::CleanUp() {
 // Update: draw background
 update_status ModuleSceneIntro::Update() {
 	// Draw everything --------------------------------------	
-	App->renderer->Blit(graphics, 0, 0, NULL);
+	App->renderer->Blit(graphics, 0, 0, NULL, SDL_FLIP_NONE);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
 		App->audio->PlayFx(fx);

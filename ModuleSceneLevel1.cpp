@@ -56,7 +56,7 @@ update_status ModuleSceneLevel1::Update() {
 	//App->renderer->camera.x -= 3;
 	
 	// Draw everything --------------------------------------
-	App->renderer->Blit(background, 0, 0, NULL);
+	App->renderer->Blit(background, 0, 0, NULL, SDL_FLIP_NONE);
 	
 	return UPDATE_CONTINUE;
 }

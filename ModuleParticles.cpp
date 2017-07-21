@@ -22,7 +22,7 @@ update_status ModuleParticles::PostUpdate() {
 			it = active.erase(it);
 			break;
 		} else if(p->timer.Read() > p->delay) {
-			App->renderer->Blit(p->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
+			App->renderer->Blit(p->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), SDL_FLIP_NONE);
 			if(p->fx_played == false) {
 				p->fx_played = true;
 				App->audio->PlayFx(p->fx);
