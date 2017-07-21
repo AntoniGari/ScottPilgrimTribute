@@ -35,6 +35,10 @@ public:
 		return loops > 0;
 	}
 
+	void Flip() {
+	
+	}
+
 	void Reset() {
 		current_frame = 0;
 	}
