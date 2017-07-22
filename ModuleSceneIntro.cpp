@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start() {
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	graphics = App->textures->Load("ui\\start.png");
+	graphics = App->textures->Load("sprites_ui\\start.png");
 	App->audio->PlayMusic("music\\01-scott-pilgrim-anthem.ogg", 0.0f);
 	fx = App->audio->LoadFx("starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;

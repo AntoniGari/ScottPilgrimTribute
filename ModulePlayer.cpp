@@ -67,7 +67,7 @@ bool ModulePlayer::Start() {
 	LOG("Loading player");
 
 	flip = SDL_FLIP_NONE;
-	graphics = App->textures->Load("characters\\scott_p1.png");
+	graphics = App->textures->Load("sprites_characters\\scott_p1.png");
 
 	position.x = 150;
 	position.y = 120;

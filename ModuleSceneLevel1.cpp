@@ -19,7 +19,7 @@ ModuleSceneLevel1::~ModuleSceneLevel1() {}
 bool ModuleSceneLevel1::Start() {
 	LOG("Loading space scene");
 	
-	background = App->textures->Load("backgrounds\\level1.png");
+	background = App->textures->Load("sprites_backgrounds\\level1.png");
 
 	App->collision->Enable(); // enable before player
 	App->player->Enable();
