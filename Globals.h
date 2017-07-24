@@ -35,7 +35,7 @@ enum update_status {
 
 // Configuration -----------
 #define SCREEN_WIDTH 384
-#define SCREEN_HEIGHT 240
+#define SCREEN_HEIGHT 216
 #define SCREEN_SIZE 3
 #define FULLSCREEN false
 #define VSYNC true

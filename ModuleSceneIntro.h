@@ -18,8 +18,8 @@ public:
 
 public:
 
-	SDL_Texture* graphics = nullptr;
-	Animation water;
+	SDL_Texture* menu_background = nullptr;
+	SDL_Texture* menu_title = nullptr;
 	uint fx = 0;
 };
 

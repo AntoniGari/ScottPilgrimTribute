@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "Point.h"
 #include "Timer.h"
+#include "SDL/include/SDL.h"
 
 struct Collider;
 struct SDL_Texture;
@@ -17,6 +18,7 @@ struct Particle {
 	unsigned int fx = 0;
 	iPoint position = {0, 0};
 	iPoint speed = {0, 0};
+	SDL_RendererFlip flip;
 	Timer timer;
 	uint32 delay;
 	uint32 born = 0;
@@ -37,7 +39,7 @@ public:
 	update_status PostUpdate();
 
 	void OnCollision(Collider*, Collider*);
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE, Uint32 delay = 0);
+	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE, SDL_RendererFlip flip, Uint32 delay = 0);
 
 private:
 

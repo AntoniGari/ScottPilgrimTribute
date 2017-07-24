@@ -23,19 +23,21 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
+	void CheckInput();
+
 public:
 	SDL_Texture* graphics = nullptr;
 	Collider* collider = nullptr;
 	Animation* current_animation = nullptr;
 	Animation idle;
 	Animation walk;
-	Animation down;
+	Animation run;
 
 
 
 
-	Particle explosion;
-	Particle laser;
+	Particle dust;
+	//Particle coin;
 	bool finished = false;
 	SDL_RendererFlip flip;
 	iPoint position;

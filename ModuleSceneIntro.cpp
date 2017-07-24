@@ -20,7 +20,9 @@ bool ModuleSceneIntro::Start() {
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	graphics = App->textures->Load("sprites_ui\\start.png");
+	menu_background = App->textures->Load("sprites_ui\\start.png");
+	menu_title = App->textures->Load("sprites_ui\\menu_title.png");
+
 	App->audio->PlayMusic("music\\01-scott-pilgrim-anthem.ogg", 0.0f);
 	fx = App->audio->LoadFx("starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -32,7 +34,8 @@ bool ModuleSceneIntro::Start() {
 bool ModuleSceneIntro::CleanUp() {
 	LOG("Unloading Intro scene");
 
-	App->textures->Unload(graphics);
+	App->textures->Unload(menu_background);
+	App->textures->Unload(menu_title);
 
 	return true;
 }
@@ -40,7 +43,9 @@ bool ModuleSceneIntro::CleanUp() {
 // Update: draw background
 update_status ModuleSceneIntro::Update() {
 	// Draw everything --------------------------------------	
-	App->renderer->Blit(graphics, 0, 0, NULL, SDL_FLIP_NONE);
+	App->renderer->Blit(menu_background, 0, 0, NULL, SDL_FLIP_NONE);
+	App->renderer->Blit(menu_title, 184, 29, NULL, SDL_FLIP_NONE);
+	
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
 		App->audio->PlayFx(fx);

@@ -5,6 +5,7 @@
 #include "ModuleAudio.h"
 #include "ModuleCollision.h"
 #include "ModuleParticles.h"
+#include "SDL/include/SDL.h"
 
 using namespace std;
 
@@ -22,7 +23,7 @@ update_status ModuleParticles::PostUpdate() {
 			it = active.erase(it);
 			break;
 		} else if(p->timer.Read() > p->delay) {
-			App->renderer->Blit(p->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), SDL_FLIP_NONE);
+			App->renderer->Blit(p->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), p->flip);
 			if(p->fx_played == false) {
 				p->fx_played = true;
 				App->audio->PlayFx(p->fx);
@@ -45,11 +46,12 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
 	}
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay) {
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, SDL_RendererFlip flip, Uint32 delay) {
 	Particle* p = new Particle(particle);
 	p->timer.Start();
 	p->position.x = x;
 	p->position.y = y;
+	p->flip = flip;
 	p->delay = delay;
 
 	if(collider_type != COLLIDER_NONE) {
