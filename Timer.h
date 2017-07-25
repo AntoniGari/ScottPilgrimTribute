@@ -11,8 +11,12 @@ public:
 
 	void Start();
 	void Stop();
+	void Reset();
 
 	uint32 Read();
+
+	bool Compare(Uint32);
+	bool isRunning();
 
 private:
 

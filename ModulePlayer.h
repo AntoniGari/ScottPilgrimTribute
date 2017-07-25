@@ -13,6 +13,14 @@ struct Collider;
 struct Particle;
 
 class ModulePlayer : public Module {
+
+enum character_state {
+	NONE,
+	MOVE,
+	ATTACK,
+	JUMP
+};
+
 public:
 	ModulePlayer(bool start_enabled = true);
 	~ModulePlayer();
@@ -32,10 +40,12 @@ public:
 	Animation idle;
 	Animation walk;
 	Animation run;
+	Animation light_punch;
 
 
-
-
+	character_state state;
+	Timer* attack_timer;
+	
 	Particle dust;
 	//Particle coin;
 	bool finished = false;

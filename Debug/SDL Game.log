@@ -1,23 +1,8 @@
-﻿Compilación iniciada a las 22/07/2017 14:23:35.
+﻿Compilación iniciada a las 24/07/2017 17:51:45.
      1>Proyecto "C:\Users\Antoni\Desktop\Projectes Jocs\ScottPilgrimTribute\SDL Game.vcxproj" en el nodo 2 (Build destinos).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Application.cpp Log.cpp Main.cpp ModuleAudio.cpp ModuleCollision.cpp ModuleFadeToBlack.cpp ModuleInput.cpp ModuleParticles.cpp ModulePlayer.cpp ModuleRender.cpp ModuleSceneIntro.cpp ModuleSceneLevel1.cpp ModuleTextures.cpp ModuleWindow.cpp Timer.cpp
-         Timer.cpp
-         ModuleWindow.cpp
-         ModuleTextures.cpp
-         ModuleSceneLevel1.cpp
-         ModuleSceneIntro.cpp
-         ModuleRender.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ModulePlayer.cpp
          ModulePlayer.cpp
-         ModuleParticles.cpp
-         ModuleInput.cpp
-         ModuleFadeToBlack.cpp
-         ModuleCollision.cpp
-         ModuleAudio.cpp
-         Main.cpp
-         Log.cpp
-         Application.cpp
-         Generando código...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Antoni\Desktop\Projectes Jocs\ScottPilgrimTribute\Debug\SPvsWG.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Antoni\Desktop\Projectes Jocs\ScottPilgrimTribute\Debug\SPvsWG.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Antoni\Desktop\Projectes Jocs\ScottPilgrimTribute\Debug\SPvsWG.lib" /MACHINE:X86 Debug\Application.obj
          Debug\Log.obj
@@ -34,10 +19,9 @@
          Debug\ModuleTextures.obj
          Debug\ModuleWindow.obj
          Debug\Timer.obj
-     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: la biblioteca predeterminada'msvcrt.lib' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
          SDL Game.vcxproj -> C:\Users\Antoni\Desktop\Projectes Jocs\ScottPilgrimTribute\Debug\SPvsWG.exe
      1>Compilación del proyecto terminada "C:\Users\Antoni\Desktop\Projectes Jocs\ScottPilgrimTribute\SDL Game.vcxproj" (Build destinos).
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:04.44
+Tiempo transcurrido 00:00:00.65

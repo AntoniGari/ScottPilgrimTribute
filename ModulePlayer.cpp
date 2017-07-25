@@ -11,6 +11,9 @@
 #include "SDL/include/SDL.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled) {
+	state = NONE;
+
+	//Animations ---
 	//Idle Animation
 	idle.frames.push_back({0, 0, 40, 70});
 	idle.frames.push_back({40, 0, 40, 70 });
@@ -45,9 +48,15 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled) {
 	run.loop = true;
 	run.speed = 0.15f;
 
+	//Light Punch Animation
+	light_punch.frames.push_back({ 560, 0, 60, 70 });
+	light_punch.loop = false;
+	light_punch.speed = 0.15f;
+
+	//Hard Punch Animation
+
 	// Particles ---
 	// Dust particle
-	
 	dust.anim.frames.push_back({0, 0, 40, 30});
 	dust.anim.frames.push_back({40, 0, 40, 30 });
 	dust.anim.frames.push_back({80, 0, 40, 30 });
@@ -56,13 +65,13 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled) {
 	dust.anim.loop = false;
 	dust.anim.speed = 0.15f;
 	
-	// Laser particle
+	// Coin particle
 	/*
-	laser.anim.frames.push_back({200, 120, 32, 12});
-	laser.anim.frames.push_back({230, 120, 32, 12});
-	laser.speed.x = 7;
-	laser.life = 1000;
-	laser.anim.speed = 0.05f;
+	coin.anim.frames.push_back({200, 120, 32, 12});
+	coin.anim.frames.push_back({230, 120, 32, 12});
+	coin.speed.x = 7;
+	coin.life = 1000;
+	coin.anim.speed = 0.05f;
 	*/
 
 }
@@ -84,12 +93,13 @@ bool ModulePlayer::Start() {
 	dust.graphics = particles;
 
 
-	//explosion.fx = App->audio->LoadFx("explosion.wav");
-	//laser.fx = App->audio->LoadFx("slimeball.wav");
+	//coin.fx = App->audio->LoadFx("fx\\coin.wav");
 
 	collider = App->collision->AddCollider({0, 0, 40, 70}, COLLIDER_PLAYER, this);
 
+
 	finished = false;
+	attack_timer = new Timer();
 	return true;
 }
 
@@ -121,7 +131,7 @@ void ModulePlayer::CheckInput() {
 	int walkSpeed = 1;
 	int runSpeed = 2;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && state != ATTACK) {
 		position.y += walkSpeed;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT) {
 			if (current_animation != &walk) {
@@ -131,7 +141,7 @@ void ModulePlayer::CheckInput() {
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && state != ATTACK) {
 		position.y -= walkSpeed;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT) {
 			if (current_animation != &walk) {
@@ -141,11 +151,11 @@ void ModulePlayer::CheckInput() {
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && state != ATTACK) {
 		flip = SDL_FLIP_HORIZONTAL;
 
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN)
-			App->particles->AddParticle(dust, position.x + 15, position.y + 40, COLLIDER_NONE, flip);
+			App->particles->AddParticle(dust, position.x + 35, position.y + 38, COLLIDER_NONE, flip);
 
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 			position.x -= runSpeed;
@@ -153,8 +163,7 @@ void ModulePlayer::CheckInput() {
 				run.Reset();
 				current_animation = &run;
 			}
-		}
-		else {
+		} else {
 			position.x -= walkSpeed;
 			if (current_animation != &walk) {
 				walk.Reset();
@@ -163,11 +172,11 @@ void ModulePlayer::CheckInput() {
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && state != ATTACK) {
 		flip = SDL_FLIP_NONE;
 
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN)
-			App->particles->AddParticle(dust, position.x - 15, position.y + 40, COLLIDER_NONE, flip);
+			App->particles->AddParticle(dust, position.x - 15, position.y + 38, COLLIDER_NONE, flip);
 
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 			position.x += runSpeed;
@@ -175,8 +184,7 @@ void ModulePlayer::CheckInput() {
 				run.Reset();
 				current_animation = &run;
 			}
-		}
-		else {
+		} else {
 			position.x += walkSpeed;
 			if (current_animation != &walk) {
 				walk.Reset();
@@ -185,8 +193,16 @@ void ModulePlayer::CheckInput() {
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (state == ATTACK && attack_timer->isRunning()) {
+		if (attack_timer->Compare(600)) {
+			state = NONE;
+			attack_timer->Stop();
+		}
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		state = ATTACK;
+		attack_timer->Start();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
@@ -195,7 +211,7 @@ void ModulePlayer::CheckInput() {
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 	if(c1 == collider && finished == false) {
-		//App->particles->AddParticle(explosion, position.x, position.y, COLLIDER_NONE);
+		//App->particles->AddParticle(dead_particle, position.x, position.y, COLLIDER_NONE);
 		//App->fade->FadeToBlack((Module*) App->scene_intro, (Module*) App->scene_level1, 1.0f);
 		//finished = true;
 	}
